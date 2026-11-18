@@ -4,7 +4,7 @@ import com.labca.pages.InventoryPage;
 import com.labca.pages.LoginPage;
 import com.labca.utils.Config;
 import com.labca.utils.DriverFactory;
-import com.labca.utils.ScreenshotOnFailure;
+import com.labca.listeners.ScreenshotOnFailure;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.WebDriver;

@@ -12,22 +12,32 @@ built with **Selenium WebDriver 4**, **JUnit 5** and the **Page Object Model**.
 | JUnit Jupiter | 5.11 |
 
 ## Project structure
+Framework code (reusable, no test logic) lives in `src/main`; JUnit tests and test
+infrastructure live in `src/test`.
+
 ```
-src/test/java/com/labca
-├── base/BaseTest.java              # Driver lifecycle, common login helper
-├── utils/
-│   ├── Config.java                 # config.properties + -D overrides
-│   ├── DriverFactory.java          # Chrome / Firefox / Edge, headless option
-│   └── ScreenshotOnFailure.java    # JUnit 5 TestWatcher -> target/screenshots
-├── pages/                          # Page objects
-│   ├── LoginPage, InventoryPage, ProductDetailsPage, HeaderComponent
-│   └── CartPage, CheckoutInfoPage, CheckoutOverviewPage, CheckoutCompletePage
-└── tests/
-    ├── LoginTests.java             # TC01–TC06
-    ├── InventoryTests.java         # TC07–TC12
-    ├── CartTests.java              # TC13–TC18
-    ├── CheckoutTests.java          # TC19–TC20
-    └── EndToEndPurchaseTest.java   # TC21 full journey
+src
+├── main
+│   ├── java/com/labca
+│   │   ├── pages/                          # Page Object Model (Selenium WebDriver)
+│   │   │   ├── BasePage, HeaderComponent
+│   │   │   ├── LoginPage, InventoryPage, ProductDetailsPage
+│   │   │   └── CartPage, CheckoutInfoPage, CheckoutOverviewPage, CheckoutCompletePage
+│   │   └── utils/
+│   │       ├── Config.java                 # config.properties + -D overrides
+│   │       └── DriverFactory.java          # Chrome / Firefox / Edge, headless option
+│   └── resources/config.properties         # base URL, waits, demo users
+└── test
+    ├── java/com/labca
+    │   ├── base/BaseTest.java              # Driver per test, common login helper
+    │   ├── listeners/ScreenshotOnFailure.java  # JUnit 5 TestWatcher -> target/screenshots
+    │   └── tests/
+    │       ├── LoginTests.java             # TC01–TC06
+    │       ├── InventoryTests.java         # TC07–TC12
+    │       ├── CartTests.java              # TC13–TC18
+    │       ├── CheckoutTests.java          # TC19–TC20
+    │       └── EndToEndPurchaseTest.java   # TC21 full journey
+    └── resources/junit-platform.properties
 ```
 
 ## Test cases

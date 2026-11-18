@@ -22,7 +22,7 @@
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
             <version>${selenium.version}</version>
-            <scope>test</scope>
+            <!-- compile scope: used by page objects and utils in src/main -->
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>

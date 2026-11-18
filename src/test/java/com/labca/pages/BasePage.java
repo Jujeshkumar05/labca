@@ -1,0 +1,57 @@
+package com.labca.pages;
+
+import com.labca.utils.Config;
+import java.time.Duration;
+import java.util.List;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+/** Shared helpers for all page objects, built on explicit waits. */
+public abstract class BasePage {
+    protected final WebDriver driver;
+    protected final WebDriverWait wait;
+
+    protected BasePage(WebDriver driver) {
+        this.driver = driver;
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(Config.getInt("explicit.wait.seconds")));
+    }
+
+    protected WebElement visible(By locator) {
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+    }
+
+    protected void click(By locator) {
+        wait.until(ExpectedConditions.elementToBeClickable(locator)).click();
+    }
+
+    protected void type(By locator, String text) {
+        WebElement el = visible(locator);
+        el.clear();
+        el.sendKeys(text);
+    }
+
+    protected String text(By locator) {
+        return visible(locator).getText().trim();
+    }
+
+    protected boolean isDisplayed(By locator) {
+        List<WebElement> found = driver.findElements(locator);
+        return !found.isEmpty() && found.get(0).isDisplayed();
+    }
+
+    /** Converts a product name to the slug used in data-test ids, e.g. "Sauce Labs Backpack" -> "sauce-labs-backpack". */
+    protected static String slug(String productName) {
+        return productName.toLowerCase().replaceAll("[^a-z0-9]+", "-").replaceAll("(^-|-$)", "");
+    }
+
+    public String currentUrl() {
+        return driver.getCurrentUrl();
+    }
+
+    public String title() {
+        return driver.getTitle();
+    }
+}
